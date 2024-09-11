@@ -1,4 +1,20 @@
 <?php require_once 'templates/header.php'; ?>
+<?php
+//MIDDLEWARE. RETURN THE NOT ADMIN TO INDEX PHP
+if (!Middleware::is_admin()) {
+    header('location: index.php');
+    exit();
+}
+?>
+
+<?php if (Validation::is_errors()) {
+    // LOOP THE ERRORS IF WE HAVE ERRORS IN THE SESSION
+    $errors = Validation::getErrors();
+
+    foreach ($errors as $error) {
+        echo '<div class="alert alert-danger">'.$error.'</div>';
+    }
+} ?>
 
     <form action="controller/productController.php" method="POST" enctype="multipart/form-data">
 
@@ -9,7 +25,7 @@
         </div>
 
         <div class="form-floating">
-            <textarea class="form-control" id="description"
+            <textarea class="form-control" id="description" name="description"
                       style="height: 100px"><?php echo Validation::getValue('description') ?></textarea>
             <label for="description">Description</label>
         </div>
@@ -33,7 +49,7 @@
         </div>
 
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="active" id="active"
+            <input class="form-check-input" type="checkbox" value="active" id="active" name="active"
                 <?php echo Validation::getValue('active') ? 'checked' : ''; ?>>
             <label class="form-check-label" for="active">
                 Active
