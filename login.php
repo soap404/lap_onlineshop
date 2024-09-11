@@ -13,17 +13,6 @@
 
 
     <form action="controller/authController.php" method="POST">
-        <div class="mb-3">
-            <label for="fname" class="form-label">First name</label>
-            <input type="text" class="form-control" id="fname" name="fname"
-                   value="<?php echo Validation::getValue('fname') ?>">
-        </div>
-
-        <div class="mb-3">
-            <label for="lname" class="form-label">Last name</label>
-            <input type="text" class="form-control" id="lname" name="lname"
-                   value="<?php echo Validation::getValue('lname') ?>">
-        </div>
 
         <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
@@ -37,7 +26,7 @@
                    value="<?php echo Validation::getValue('password') ?>">
         </div>
 
-        <button type="submit" class="btn btn-primary" name="register">Register</button>
+        <button type="submit" class="btn btn-primary" name="login">Login</button>
     </form>
 
 <?php require_once 'templates/footer.php'; ?>

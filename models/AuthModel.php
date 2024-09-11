@@ -32,4 +32,14 @@ class AuthModel extends DB
         return $this->conn->lastInsertId();
     }
 
+    public function get_user_by_email($email){
+        $ps = $this->conn->prepare('
+        SELECT * FROM users
+        WHERE email = :email');
+
+        $ps->bindParam(':email', $email);
+        $ps->execute();
+        return $ps->fetch(PDO::FETCH_ASSOC);
+    }
+
 }

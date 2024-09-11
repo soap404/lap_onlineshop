@@ -1,4 +1,4 @@
-<?php require_once ('autoload.php')?>
+<?php require_once('autoload.php') ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,11 +20,11 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
+                <a class="nav-link" href="<?php echo DOMAIN ?>/login.php">Login</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo DOMAIN?>/register.php">Register</a>
+                <a class="nav-link" href="<?php echo DOMAIN ?>/register.php">Register</a>
             </li>
 
             <li class="nav-item">
