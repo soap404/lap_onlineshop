@@ -18,6 +18,16 @@ class Validation
         return $errors;
     }
 
+    public static function is_errors()
+    {
+        if (isset($_SESSION['errors'])) {
+            if (count($_SESSION['errors']) > 0) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
 
 
 }
