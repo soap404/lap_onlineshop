@@ -3,13 +3,13 @@
 class Validation
 {
 
-    public function setErrors(array $errors)
+    public static function setErrors(array $errors)
     {
         $_SESSION['errors'] = $errors;
 
     }
 
-    public function getErrors()
+    public static function getErrors()
     {
         $errors = $_SESSION['errors'];
 
