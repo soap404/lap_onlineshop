@@ -34,8 +34,8 @@ if (isset($_POST['register'])) {
 
     Validation::setErrors($errors);
 
-    if (Validation::getErrors()) {
-        echo 'you are registered ';
+    if (Validation::is_errors()) {
+        header('Location:'. DOMAIN .'/register.php');
     }
 
 

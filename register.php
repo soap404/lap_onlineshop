@@ -1,6 +1,17 @@
 <?php require_once 'templates/header.php'; ?>
 
 
+<?php if (Validation::is_errors()) {
+    // LOOP THE ERRORS IF WE HAVE ERRORS IN THE SESSION
+    $errors = Validation::getErrors();
+
+
+    foreach ($errors as $error) {
+        echo '<div class="alert alert-danger">'.$error.'</div>';
+    }
+} ?>
+
+
     <form action="controller/authController.php" method="POST">
         <div class="mb-3">
             <label for="fname" class="form-label">First name</label>
@@ -14,7 +25,7 @@
 
         <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="email" name="email">
+            <input type="text" class="form-control" id="email" name="email">
         </div>
 
         <div class="mb-3">
