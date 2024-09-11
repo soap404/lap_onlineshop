@@ -26,11 +26,6 @@
                    value="<?php echo Validation::getValue('stock') ?>">
         </div>
 
-        <div class="mb-3">
-            <label for="stock" class="form-label">Stock</label>
-            <input type="number" class="form-control" id="stock" name="stock"
-                   value="<?php echo Validation::getValue('stock') ?>">
-        </div>
 
         <div class="form-check">
             <input type="file" id="image" name="image" accept="image/png, image/jpeg">
