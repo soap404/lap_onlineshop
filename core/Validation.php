@@ -29,5 +29,20 @@ class Validation
         return false;
     }
 
+    public static function setValues($values)
+    {
+        $_SESSION['values'] = $values;
+    }
+
+    public static function getValue($key)
+    {
+        if (isset($_SESSION['values'][$key])) {
+            $value = $_SESSION['values'][$key];
+            $_SESSION['values'][$key] = '';
+            return $value;
+        }
+        return null;
+    }
+
 
 }

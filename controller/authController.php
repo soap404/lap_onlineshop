@@ -37,6 +37,9 @@ if (isset($_POST['register'])) {
 
     // CHECK IF WE HAVE ERRORS IN THE SESSION. IF YES SEND HIM BACK TO register.php
     if (Validation::is_errors()) {
+        // IF THE FORM HAVE ERROR WE SAVE IN THE SESSION WHAT THE USER SEND US
+        Validation::setValues($_POST);
+
         header('Location:'.DOMAIN.'/register.php');
         exit();
     } else {

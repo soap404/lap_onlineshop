@@ -15,22 +15,22 @@
     <form action="controller/authController.php" method="POST">
         <div class="mb-3">
             <label for="fname" class="form-label">First name</label>
-            <input type="text" class="form-control" id="fname" name="fname">
+            <input type="text" class="form-control" id="fname" name="fname" value="<?php echo Validation::getValue('fname') ?>">
         </div>
 
         <div class="mb-3">
             <label for="lname" class="form-label">Last name</label>
-            <input type="text" class="form-control" id="lname" name="lname">
+            <input type="text" class="form-control" id="lname" name="lname" value="<?php echo Validation::getValue('lname') ?>">
         </div>
 
         <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input type="text" class="form-control" id="email" name="email">
+            <input type="text" class="form-control" id="email" name="email" value="<?php echo Validation::getValue('email') ?>">
         </div>
 
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
+            <input type="password" class="form-control" id="password" name="password" value="<?php echo Validation::getValue('password') ?>">
         </div>
 
         <button type="submit" class="btn btn-primary" name="register">Register</button>
