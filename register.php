@@ -1,5 +1,12 @@
 <?php require_once 'templates/header.php'; ?>
 
+<?php
+//MIDDLEWARE. RETURN THE USER TO INDEX PHP
+if (Middleware::is_user()) {
+    header('location: index.php');
+    exit();
+}
+?>
 
 <?php if (Validation::is_errors()) {
     // LOOP THE ERRORS IF WE HAVE ERRORS IN THE SESSION

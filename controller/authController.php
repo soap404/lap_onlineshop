@@ -3,6 +3,12 @@ require_once('../autoload.php');
 require_once('../models/authModel.php');
 
 if (isset($_POST['register'])) {
+    //MIDDLEWARE. RETURN THE USER TO INDEX PHP
+    if (Middleware::is_user()) {
+        header('location: '.DOMAIN.'index.php');
+        exit();
+    }
+
     $errors = array();
     // SAVE FORM INPUTS IN VARIABLES
     $fname = trim($_POST['fname']);
@@ -55,6 +61,12 @@ if (isset($_POST['register'])) {
 }
 
 if (isset($_POST['login'])) {
+    //MIDDLEWARE. RETURN THE USER TO INDEX PHP
+    if (Middleware::is_user()) {
+        header('location: index.php');
+        exit();
+    }
+
     $errors = array();
     // SAVE FORM INPUTS IN VARIABLES
     $email = trim($_POST['email']);
@@ -110,6 +122,11 @@ if (isset($_POST['login'])) {
 }
 
 if (isset($_POST['logout'])) {
+    //MIDDLEWARE. RETURN THE GUEST TO INDEX PHP
+    if (Middleware::is_guest()) {
+        header('location:'.DOMAIN.'/index.php');
+        exit();
+    }
     unset($_SESSION['user']);
     header('Location:'.DOMAIN.'/index.php');
     exit();

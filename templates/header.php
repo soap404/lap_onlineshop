@@ -19,35 +19,45 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo DOMAIN ?>/login.php">Login</a>
-            </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo DOMAIN ?>/register.php">Register</a>
-            </li>
+            <?php if (Middleware::is_guest()): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo DOMAIN ?>/login.php">Login</a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="#">Admin</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo DOMAIN ?>/register.php">Register</a>
+                </li>
+            <?php endif; ?>
 
-            <li class="nav-item">
-                <a class="nav-link" href="#">Products</a>
-            </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="#">Cart</a>
-            </li>
+            <?php if (Middleware::is_admin()): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Admin</a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="#">Account</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Products</a>
+                </li>
+            <?php endif; ?>
 
-            <li class="nav-item">
-                <form action="<?php echo DOMAIN ?>/controller/authController.php" method="POST">
-                    <button type="submit" name="logout" class="nav-link">Logout</button>
-                </form>
-            </li>
+            <?php if (Middleware::is_user()): ?>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Cart</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Account</a>
+                </li>
+
+                <li class="nav-item">
+                    <form action="<?php echo DOMAIN ?>/controller/authController.php" method="POST">
+                        <button type="submit" name="logout" class="nav-link">Logout</button>
+                    </form>
+                </li>
+
+            <?php endif; ?>
         </ul>
     </div>
 </nav>
