@@ -108,3 +108,9 @@ if (isset($_POST['login'])) {
 
 
 }
+
+if (isset($_POST['logout'])) {
+    unset($_SESSION['user']);
+    header('Location:'.DOMAIN.'/index.php');
+    exit();
+}

@@ -44,7 +44,9 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">Logout</a>
+                <form action="<?php echo DOMAIN ?>/controller/authController.php" method="POST">
+                    <button type="submit" name="logout" class="nav-link">Logout</button>
+                </form>
             </li>
         </ul>
     </div>
