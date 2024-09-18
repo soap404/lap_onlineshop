@@ -16,7 +16,7 @@ if(isset($_POST['add_to_cart'])){
         exit();
     }
 
-    $product_cart['id'] = $id;
+
     $product_cart['qty'] = $qty;
 
     $_SESSION['cart'][$id] = $product_cart;
