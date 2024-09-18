@@ -1,5 +1,4 @@
 <?php
-require_once('../autoload.php');
 
 class ProductModel extends DB
 {
@@ -24,5 +23,11 @@ class ProductModel extends DB
         $ps->bindParam(':image', $image);
         $ps->execute();
         return $this->conn->lastInsertId();
+    }
+
+    public function index(){
+        $ps = $this->conn->prepare('SELECT * FROM products');
+        $ps->execute();
+        return $ps->fetchAll(PDO::FETCH_ASSOC);
     }
 }
