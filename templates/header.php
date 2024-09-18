@@ -44,7 +44,7 @@
             <?php if (Middleware::is_user()): ?>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Cart</a>
+                    <a class="nav-link" href="<?php echo DOMAIN ?>/cart.php">Cart</a>
                 </li>
 
                 <li class="nav-item">
