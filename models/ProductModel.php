@@ -39,4 +39,11 @@ class ProductModel extends DB
         $ps->bindParam(':id', $id, PDO::PARAM_INT);
         $ps->execute();
     }
+
+    public function show($id){
+        $ps = $this->conn->prepare('SELECT * FROM products WHERE id = :id');
+        $ps->bindParam(':id', $id, PDO::PARAM_INT);
+        $ps->execute();
+        return $ps->fetch(PDO::FETCH_ASSOC);
+    }
 }

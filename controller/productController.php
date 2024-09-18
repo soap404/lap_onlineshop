@@ -69,9 +69,25 @@ if(isset($_POST["delete_product"])){
         exit();
     }
 
+    $product_id = $_POST["id"];
+
     $productModel = new ProductModel();
 
-    $productModel->delete($_POST["id"]);
+    $product = $productModel->show($product_id);
+
+    // check if the $product_id was correct
+    if(!$product){
+        header('location: '.DOMAIN.'/products.php');
+        exit();
+    }
+
+    // delete the image form the images folder
+    $image = $product['img'];
+    if($image){
+        unlink("../images/".$image);
+    }
+
+    $productModel->delete($product_id);
 
     header('location: '.DOMAIN.'/products.php');
     exit();
