@@ -24,3 +24,14 @@ if(isset($_POST['add_to_cart'])){
     header('location: '.DOMAIN.'/cart.php');
     exit();
 }
+
+if(isset($_POST['remove_from_cart'])){
+    $id =$_POST['id'];
+    if(isset($_SESSION['cart'][$id])){
+        unset($_SESSION['cart'][$id]);
+    }
+
+    header('location: '.DOMAIN.'/cart.php');
+    exit();
+
+}
