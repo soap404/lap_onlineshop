@@ -25,7 +25,7 @@ $products = $productModel->index_user();
                             <p class="card-text flex-grow-1"><?php echo $product['description'] ?></p>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">Stock: <?php echo $product['stock'] ?></li>
-                                <li class="list-group-item">Price: <?php echo $product['price'] ?>€</li>
+                                <li class="list-group-item">Price: <?php echo $product['price'] ?> €</li>
                             </ul>
                             <form action="controller/cartController.php" method="POST">
                                 <input type="hidden" name="id" value="<?php echo $product['id']; ?>">

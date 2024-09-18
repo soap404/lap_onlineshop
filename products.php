@@ -41,7 +41,7 @@ $products = $productModel->index();
                      alt=""></td>
             <td><?php echo $product['name'] ?></td>
             <td><?php echo $product['description'] ?></td>
-            <td><?php echo $product['price'] ?></td>
+            <td><?php echo $product['price'] ?> €</td>
 
             <td><?php echo $product['stock'] ?></td>
             <td>

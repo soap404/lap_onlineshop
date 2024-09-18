@@ -35,3 +35,12 @@ if(isset($_POST['remove_from_cart'])){
     exit();
 
 }
+
+if(isset($_POST['update_qty'])){
+    $id =$_POST['id'];
+    $qty =$_POST['qty'];
+
+    $_SESSION['cart'][$id]['qty'] = $qty;
+    header('location: '.DOMAIN.'/cart.php');
+    exit();
+}
