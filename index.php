@@ -27,9 +27,9 @@ $products = $productModel->index_user();
                                 <li class="list-group-item">Stock: <?php echo $product['stock'] ?></li>
                                 <li class="list-group-item">Price: <?php echo $product['price'] ?>€</li>
                             </ul>
-                            <form action="#" method="POST">
+                            <form action="controller/cartController.php" method="POST">
                                 <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
-                                <select class="form-select form-select-sm" aria-label="Small select example" name="stock">
+                                <select class="form-select form-select-sm" aria-label="Small select example" name="qty">
                                     <?php for ($i = 1; $i <= $product['stock'] && $i <= 30; $i++) : ?>
                                         <option value="<?php echo $i ?>">Stock: <?php echo $i ?></option>
                                     <?php endfor; ?>
