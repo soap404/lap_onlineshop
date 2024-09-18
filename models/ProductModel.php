@@ -40,10 +40,29 @@ class ProductModel extends DB
         $ps->execute();
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $ps = $this->conn->prepare('SELECT * FROM products WHERE id = :id');
         $ps->bindParam(':id', $id, PDO::PARAM_INT);
         $ps->execute();
         return $ps->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function update($id, $name, $description, $price, $stock, $active, $image)
+    {
+        $ps = $this->conn->prepare('UPDATE products
+        SET name = :name, description = :description, price = :price, stock = :stock, is_active = :active, img = :image
+        WHERE id = :id');
+
+        $ps->bindParam(':id', $id);
+        $ps->bindParam(':name', $name);
+        $ps->bindParam(':description', $description);
+        $ps->bindParam(':price', $price);
+        $ps->bindParam(':stock', $stock);
+        $ps->bindParam(':active', $active, PDO::PARAM_BOOL);
+        $ps->bindParam(':image', $image);
+
+        $ps->execute();
+
     }
 }

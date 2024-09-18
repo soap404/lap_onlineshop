@@ -63,7 +63,7 @@ if (isset($_POST["create"])) {
 
 }
 
-if(isset($_POST["delete_product"])){
+if (isset($_POST["delete_product"])) {
     if (!Middleware::is_admin()) {
         header('location: '.DOMAIN.'/index.php');
         exit();
@@ -76,14 +76,14 @@ if(isset($_POST["delete_product"])){
     $product = $productModel->show($product_id);
 
     // check if the $product_id was correct
-    if(!$product){
+    if (!$product) {
         header('location: '.DOMAIN.'/products.php');
         exit();
     }
 
     // delete the image form the images folder
     $image = $product['img'];
-    if($image){
+    if ($image) {
         unlink("../images/".$image);
     }
 
@@ -91,4 +91,65 @@ if(isset($_POST["delete_product"])){
 
     header('location: '.DOMAIN.'/products.php');
     exit();
+}
+
+if (isset($_POST["update"])) {
+    if (!Middleware::is_admin()) {
+        header('location: '.DOMAIN.'/index.php');
+        exit();
+    }
+    //CALL OLD PRODUCT INFORMATION FORM THE DATABASE
+    $id = $_POST["id"];
+    $productModel = new ProductModel();
+    $oldProduct = $productModel->show($id);
+
+    $errors = array();
+
+    // SAVE FORM INPUTS IN VARIABLES
+    $name = trim($_POST["name"]);
+    $description = $_POST['description'] ? trim($_POST["description"]) : null; // NOT REQUIRED
+    $price = trim($_POST["price"]);
+    $stock = trim($_POST["stock"]);
+    $active = isset($_POST["active"]) ? 1 : 0;
+    $image = $_FILES["image"]["name"] ? time().'_'.$_FILES["image"]["name"] : $oldProduct['img']; // NOT REQUIRED
+
+    // FORM VALIDATION
+    if (empty($name)) {
+        $errors[] = "Name is required";
+    }
+    if (empty($price)) {
+        $errors[] = "Price is required";
+    } else {
+        if (!is_numeric($price)) {
+            $errors[] = "Price must be a number";
+        }
+    }
+
+    if (empty($stock)) {
+        $errors[] = "Stock is required";
+    } else {
+        if (!ctype_digit($stock)) {
+            $errors[] = "Stock must be a number";
+        }
+    }
+
+
+    Validation::setErrors($errors);
+
+    if (Validation::is_errors()) {
+        header('location: '.DOMAIN.'/edit_product.php?id='.$id);
+        exit();
+    } else {
+        // SAVE IMAGE IN images FOLDER
+        if ($_FILES["image"]["name"]) {
+            unlink("../images/".$oldProduct['img']);
+            $target_file = "../images/".$image;
+            move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+        }
+
+        $productModel->update($id, $name, $description, $price, $stock, $active, $image);
+
+        header('Location:'.DOMAIN.'/products.php');
+    }
+
 }

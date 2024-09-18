@@ -7,7 +7,7 @@ class DB
     const PASSWORD = '';
     const DATABASE = 'lap_onlineshop';
 
-    protected function connect()
+    protected function connect(): PDO
     {
         return new PDO('mysql:host='.self::HOST.';dbname='.self::DATABASE, self::USER, self::PASSWORD);
     }
