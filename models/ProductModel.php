@@ -33,6 +33,13 @@ class ProductModel extends DB
         return $ps->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function index_user()
+    {
+        $ps = $this->conn->prepare('SELECT * FROM products WHERE is_active = 1 and stock > 0');
+        $ps->execute();
+        return $ps->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function delete($id)
     {
         $ps = $this->conn->prepare('DELETE FROM products WHERE id = :id');

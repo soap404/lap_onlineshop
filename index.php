@@ -1,4 +1,47 @@
-<?php require_once 'templates/header.php'; ?>
+<?php
+require_once 'templates/header.php';
+require_once 'models/ProductModel.php';
+$productModel = new ProductModel();
+$products = $productModel->index_user();
+?>
 
+    <style>
+        .card-img-top {
+            object-fit: cover;
+        }
+    </style>
+
+
+    <div class="container mt-4">
+        <div class="row">
+            <?php foreach ($products as $product) : ?>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="ratio ratio-16x9">
+                            <img src="images/<?php echo $product['img'] ? : 'default.png' ?>" class="card-img-top" alt="...">
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title"><?php echo $product['name'] ?></h5>
+                            <p class="card-text flex-grow-1"><?php echo $product['description'] ?></p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Stock: <?php echo $product['stock'] ?></li>
+                                <li class="list-group-item">Price: <?php echo $product['price'] ?>€</li>
+                            </ul>
+                            <form action="#" method="POST">
+                                <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
+                                <select class="form-select form-select-sm" aria-label="Small select example" name="stock">
+                                    <?php for ($i = 1; $i <= $product['stock'] && $i <= 30; $i++) : ?>
+                                        <option value="<?php echo $i ?>">Stock: <?php echo $i ?></option>
+                                    <?php endfor; ?>
+                                </select>
+                                <br>
+                                <button class="btn btn-primary mt-auto" name="add_to_cart">Add to Cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
 
 <?php require_once 'templates/footer.php'; ?>
