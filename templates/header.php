@@ -41,12 +41,12 @@
                 </li>
             <?php endif; ?>
 
+
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo DOMAIN ?>/cart.php">Cart</a>
+            </li>
+
             <?php if (Middleware::is_user()): ?>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo DOMAIN ?>/cart.php">Cart</a>
-                </li>
-
                 <li class="nav-item">
                     <a class="nav-link" href="#">Account</a>
                 </li>
