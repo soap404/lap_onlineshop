@@ -9,7 +9,8 @@ class ProductModel extends DB
         $this->conn = $this->connect();
     }
 
-    public function store($name, $description, $price, $stock, $active, $image){
+    public function store($name, $description, $price, $stock, $active, $image)
+    {
         $ps = $this->conn->prepare('
         INSERT INTO products (name, description, price, stock, is_active, img )
         VALUES (:name, :description, :price, :stock, :active, :image)'
@@ -25,9 +26,17 @@ class ProductModel extends DB
         return $this->conn->lastInsertId();
     }
 
-    public function index(){
+    public function index()
+    {
         $ps = $this->conn->prepare('SELECT * FROM products');
         $ps->execute();
         return $ps->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function delete($id)
+    {
+        $ps = $this->conn->prepare('DELETE FROM products WHERE id = :id');
+        $ps->bindParam(':id', $id, PDO::PARAM_INT);
+        $ps->execute();
     }
 }

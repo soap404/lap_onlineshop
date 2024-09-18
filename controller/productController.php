@@ -62,3 +62,17 @@ if (isset($_POST["create"])) {
 
 
 }
+
+if(isset($_POST["delete_product"])){
+    if (!Middleware::is_admin()) {
+        header('location: '.DOMAIN.'/index.php');
+        exit();
+    }
+
+    $productModel = new ProductModel();
+
+    $productModel->delete($_POST["id"]);
+
+    header('location: '.DOMAIN.'/products.php');
+    exit();
+}
