@@ -21,13 +21,13 @@ if (isset($_POST['save_account_settings'])) {
 
     // FORM VALIDATION
     if (empty($fname)) {
-        $errors['fname'] = 'First name is required';
+        $errors[] = 'First name is required';
     }
     if (empty($lname)) {
-        $errors['lname'] = 'Last name is required';
+        $errors[] = 'Last name is required';
     }
     if (empty($email)) {
-        $errors['email'] = 'Email is required';
+        $errors[] = 'Email is required';
     } else {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = 'Invalid email';
@@ -49,6 +49,68 @@ if (isset($_POST['save_account_settings'])) {
     }
     header('location: '.DOMAIN.'/account_settings.php');
     exit();
+
+
+}
+
+
+if (isset($_POST['save_new_password'])) {
+    //MIDDLEWARE. RETURN THE GUEST TO INDEX PHP
+    if (Middleware::is_guest()) {
+        header('location: '.DOMAIN.'/index.php');
+        exit();
+    }
+
+    $userModel = new UserModel();
+    $user_id = $_SESSION['user']['id'];
+
+    $errors = array();
+
+    // SAVE FORM INPUTS IN VARIABLES
+
+    $old_password = trim($_POST['old_password']);
+    $new_password = trim($_POST['new_password']);
+    $confirm_password = trim($_POST['confirm_password']);
+
+    if (empty($old_password)) {
+        $errors[] = 'Old password is required';
+    }
+    if (empty($new_password)) {
+        $errors[] = 'New password is required';
+    }
+
+    if (empty($confirm_password)) {
+        $errors[] = 'Confirm password is required';
+    } else {
+        if ($new_password != $confirm_password) {
+            $errors[] = 'New password and Confirm password do not match';
+        } else {
+            if (strlen($confirm_password) < 8) {
+                $errors[] = 'New password must be at least 6 characters';
+            } else {
+                $hash_db_password = $userModel->get_user_password_by_id($user_id)['password'];
+
+                if (!password_verify($old_password, $hash_db_password)) {
+                    $errors[] = 'Old password is wrong';
+                }
+
+            }
+        }
+    }
+
+
+    Validation::setErrors($errors);
+
+    if (!Validation::is_errors()) {
+        $message = 'Password successfully changed';
+        Messages::setMessage($message);
+
+
+        $userModel->update_user_password_by_id($user_id, $confirm_password);
+    }
+    header('location: '.DOMAIN.'/account_settings.php');
+    exit();
+
 
 
 }

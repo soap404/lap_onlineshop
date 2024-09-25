@@ -59,15 +59,19 @@ $user = $userModel->get_user_by_id($_SESSION['user']['id']);
             <h2>Change Account Password</h2>
             <form action="controller/userController.php" method="POST">
                 <div class="mb-3">
-                    <label for="password" class="form-label">Old Password</label>
-                    <input type="password" class="form-control" id="password" name="password"
-                           value="<?php echo Validation::getValue('password') ?>">
+                    <label for="old_password" class="form-label">Old Password</label>
+                    <input type="password" class="form-control" id="old_password" name="old_password">
+                </div>
+
+
+                <div class="mb-3">
+                    <label for="new_password" class="form-label">New Password</label>
+                    <input type="password" class="form-control" id="new_password" name="new_password">
                 </div>
 
                 <div class="mb-3">
-                    <label for="password" class="form-label">New Password</label>
-                    <input type="password" class="form-control" id="password" name="password"
-                           value="<?php echo Validation::getValue('password') ?>">
+                    <label for="confirm_password" class="form-label">Confirm new password</label>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password">
                 </div>
 
                 <button type="submit" class="btn btn-primary" name="save_new_password">Change Password</button>
