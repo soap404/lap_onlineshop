@@ -5,7 +5,7 @@ require_once('../models/productModel.php');
 if (isset($_POST["create"])) {
     //MIDDLEWARE. RETURN THE NOT ADMIN TO INDEX PHP
     if (!Middleware::is_admin()) {
-        header('location: '.DOMAIN.'index.php');
+        header('location: '.DOMAIN.'/index.php');
         exit();
     }
 

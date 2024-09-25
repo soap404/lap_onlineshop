@@ -48,7 +48,7 @@
 
             <?php if (Middleware::is_user()): ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Account</a>
+                    <a class="nav-link" href="<?php echo DOMAIN ?>/account.php"">Account</a>
                 </li>
 
                 <li class="nav-item">

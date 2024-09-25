@@ -4,7 +4,7 @@
 class Middleware
 {
 
-    public static function is_guest()
+    public static function is_guest(): bool
     {
         if (isset($_SESSION['user'])) {
             return false;
@@ -12,7 +12,7 @@ class Middleware
         return true;
     }
 
-    public static function is_user()
+    public static function is_user(): bool
     {
         if (isset($_SESSION['user'])) {
             return true;
@@ -20,7 +20,7 @@ class Middleware
         return false;
     }
 
-    public static function is_admin()
+    public static function is_admin(): bool
     {
         if (self::is_user() && $_SESSION['user']['is_admin'] == 1) {
             return true;

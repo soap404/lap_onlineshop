@@ -18,9 +18,9 @@ $user = $userModel->get_user_by_id($_SESSION['user']['id']);
 } ?>
 
 
-<?php if (Validation::is_message()) {
+<?php if (Messages::is_message()) {
     // ECHO THE MESSAGE IF WE HAVE ONE
-    $message = Validation::getMessage();
+    $message = Messages::getMessage();
 
     echo '<div class="alert alert-success">'.$message.'</div>';
 
