@@ -5,9 +5,11 @@ require_once('../models/authModel.php');
 if (isset($_POST['register'])) {
     //MIDDLEWARE. RETURN THE USER TO INDEX PHP
     if (Middleware::is_user()) {
-        header('location: '.DOMAIN.'index.php');
+        header('location: '.DOMAIN.'/index.php');
         exit();
     }
+
+    $authModel = new AuthModel();
 
     $errors = array();
     // SAVE FORM INPUTS IN VARIABLES
@@ -28,8 +30,13 @@ if (isset($_POST['register'])) {
     } else {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = 'Invalid email';
+        } else {
+            if ($authModel->get_user_by_email($email)) {
+                $errors['email'] = 'Email already exists';
+            }
         }
     }
+
 
     if (empty($password)) {
         $errors[] = 'Password is required';
@@ -49,7 +56,7 @@ if (isset($_POST['register'])) {
         header('Location:'.DOMAIN.'/register.php');
         exit();
     } else {
-        $authModel = new AuthModel();
+
 
         $authModel->register($fname, $lname, $email, $password);
 
