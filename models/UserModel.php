@@ -64,7 +64,8 @@ class UserModel extends DB
         return $ps->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function update_user_password_by_id($user_id, $password){
+    public function update_user_password_by_id($user_id, $password)
+    {
 
         $password = password_hash($password, PASSWORD_DEFAULT);
 
@@ -73,6 +74,84 @@ class UserModel extends DB
         $ps->bindParam(':password', $password);
         $ps->execute();
 
+    }
+
+    public function get_all_countries()
+    {
+        $ps = $this->conn->prepare('SELECT * FROM countries');
+        $ps->execute();
+        return $ps->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get_country_by_id($id)
+    {
+        $ps = $this->conn->prepare('SELECT * FROM countries WHERE id = :id');
+        $ps->bindParam(':id', $id);
+        $ps->execute();
+        return $ps->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function create_invoice_address($user_id, $country_id, $street, $plz, $home_number)
+    {
+        $ps = $this->conn->prepare('
+    INSERT INTO invoice_addresses
+            (user_id,country_id,street,plz,home_number )
+    VALUES 
+            (:user_id,:country_id,:street,:plz,:home_number)
+    ');
+        $ps->bindParam(':user_id', $user_id);
+        $ps->bindParam(':country_id', $country_id);
+        $ps->bindParam(':street', $street);
+        $ps->bindParam(':plz', $plz);
+        $ps->bindParam(':home_number', $home_number);
+        $ps->execute();
+
+        return $this->conn->lastInsertId();
+    }
+
+
+    public function create_address($user_id, $country_id, $street, $plz, $home_number)
+    {
+        $ps = $this->conn->prepare('
+    INSERT INTO addresses
+            (user_id,country_id,street,plz,home_number )
+    VALUES 
+            (:user_id,:country_id,:street,:plz,:home_number)
+    ');
+        $ps->bindParam(':user_id', $user_id);
+        $ps->bindParam(':country_id', $country_id);
+        $ps->bindParam(':street', $street);
+        $ps->bindParam(':plz', $plz);
+        $ps->bindParam(':home_number', $home_number);
+        $ps->execute();
+
+        return $this->conn->lastInsertId();
+    }
+
+    public function get_all_addresses_by_user_id($user_id)
+    {
+        $ps = $this->conn->prepare('
+        SELECT * FROM addresses 
+        JOIN countries ON countries.id = addresses.country_id
+        WHERE user_id = :user_id
+');
+
+        $ps->bindParam(':user_id', $user_id);
+        $ps->execute();
+        return $ps->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get_all_invoice_address_by_user_id($user_id)
+    {
+        $ps = $this->conn->prepare('
+        SELECT * FROM invoice_addresses 
+        JOIN countries ON countries.id = invoice_addresses.country_id
+        WHERE user_id = :user_id
+');
+
+        $ps->bindParam(':user_id', $user_id);
+        $ps->execute();
+        return $ps->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }

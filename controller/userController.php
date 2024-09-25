@@ -112,5 +112,60 @@ if (isset($_POST['save_new_password'])) {
     exit();
 
 
+}
+
+if (isset($_POST['save_new_address'])) {
+    if (Middleware::is_guest()) {
+        header('location: '.DOMAIN.'/index.php');
+        exit();
+    }
+
+    $userModel = new UserModel();
+    $user_id = $_SESSION['user']['id'];
+    $errors = array();
+
+    $type = trim($_POST['type']);
+    $country_id = trim($_POST['country']);
+
+    $street = trim($_POST['street']);
+    $plz = trim($_POST['plz']);
+    $home_number = trim($_POST['home_number']);
+
+    if ($type != 'delivery') {
+        if($type != 'invoice'){
+            $errors[] = 'Invalid type';
+        }
+    }
+    if (!$userModel->get_country_by_id($country_id)) {
+        $errors[] = 'This country does not exists';
+    }
+    if (empty($street)) {
+        $errors[] = 'State is required';
+    }
+    if (empty($plz)) {
+        $errors[] = 'Post code is required';
+    }
+    if (empty($home_number)) {
+        $errors[] = 'Home number is required';
+    }
+
+
+    Validation::setErrors($errors);
+
+    if (!Validation::is_errors()) {
+        $message = 'Address Created successfully ';
+        Messages::setMessage($message);
+
+        if ($type == 'delivery') {
+            $userModel->create_address($user_id, $country_id, $street, $plz, $home_number);
+        } else {
+            $userModel->create_invoice_address($user_id, $country_id, $street, $plz, $home_number);
+        }
+    } else {
+        Validation::setValues($_POST);
+    }
+    header('location: '.DOMAIN.'/account_settings.php');
+    exit();
+
 
 }
