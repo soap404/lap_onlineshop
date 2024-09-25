@@ -84,9 +84,7 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
 
     <div class="d-flex justify-content-between">
 
-        <form action="" method="POST">
-            <button type="submit" class="btn btn-success" name="checkout">Checkout</button>
-        </form>
+        <a href="./checkout.php" class="btn btn-success">Checkout</a>
 
         <ul class="list-group">
             <li class="list-group-item active">Total: <?php echo $total ?> €</li>

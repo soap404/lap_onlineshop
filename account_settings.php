@@ -102,7 +102,7 @@ $addresses = $userModel->get_all_addresses_by_user_id($_SESSION['user']['id']);
 
                 <div class="card mt-4 mb-4">
                     <div class="card-header">
-                        <?php echo $address ['name']; ?>
+                        <?php echo $address ['country']; ?>
                     </div>
                     <div class="card-body">
                         <blockquote class="blockquote mb-0">
@@ -122,7 +122,7 @@ $addresses = $userModel->get_all_addresses_by_user_id($_SESSION['user']['id']);
 
                 <div class="card mt-4 mb-4">
                     <div class="card-header">
-                        <?php echo $address ['name']; ?>
+                        <?php echo $address ['country']; ?>
                     </div>
                     <div class="card-body">
                         <blockquote class="blockquote mb-0">

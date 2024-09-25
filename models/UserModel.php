@@ -131,7 +131,14 @@ class UserModel extends DB
     public function get_all_addresses_by_user_id($user_id)
     {
         $ps = $this->conn->prepare('
-        SELECT * FROM addresses 
+        SELECT
+        addresses.id,
+        countries.name AS country,
+        addresses.user_id,
+        addresses.street,
+        addresses.plz,
+        addresses.home_number
+            FROM addresses 
         JOIN countries ON countries.id = addresses.country_id
         WHERE user_id = :user_id
 ');
@@ -144,7 +151,14 @@ class UserModel extends DB
     public function get_all_invoice_address_by_user_id($user_id)
     {
         $ps = $this->conn->prepare('
-        SELECT * FROM invoice_addresses 
+        SELECT
+        invoice_addresses.id,
+        countries.name AS country,
+        invoice_addresses.user_id,
+        invoice_addresses.street,
+        invoice_addresses.plz,
+        invoice_addresses.home_number
+        FROM invoice_addresses 
         JOIN countries ON countries.id = invoice_addresses.country_id
         WHERE user_id = :user_id
 ');
