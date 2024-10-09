@@ -48,6 +48,19 @@ class OrderModel extends DB
         return $ps->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function get_order_by_id($id)
+    {
+        $ps = $this->conn->prepare('
+        SELECT o.id, o.order_date, SUM(op.price * op.quantity) AS total_price FROM orders o
+        LEFT JOIN order_products op ON op.order_id = o.id
+        WHERE o.id = :order_id
+        GROUP BY o.id
+        ');
+        $ps->bindParam(':order_id', $id, PDO::PARAM_INT);
+        $ps->execute();
+        return $ps->fetch(PDO::FETCH_ASSOC);
+    }
+
 
     public function store_order_products($order_id, $product_id, $quantity, $price)
     {

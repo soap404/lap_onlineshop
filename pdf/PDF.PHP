@@ -28,24 +28,24 @@ class PDF
 
         $user = $userModel->get_user_by_id($user_id);
 
-        $order = $orderModel->show($order_id);
+        $order = $orderModel->get_order_by_id($order_id);
 
         $order_products = $orderModel->get_order_products($order_id);
 
+        $get_invoice_address = $orderModel->get_invoice_address($order_id);
+
         ob_start();
-        include('/templates/orderRechnug.php');
+
+        include('templates/orderRechnug.php');
 
         $html = ob_get_clean();
 
 
         $this->dompdf->loadHtml($html);
-        $this->dompdf->setPaper('A4', 'landscape');
+        $this->dompdf->setPaper('A4');
         $this->dompdf->render();
-        
+
         $output = $this->dompdf->output();
-        file_put_contents('PDFs/Rechnugen/' . $order_id . '.pdf', $output);
-
-
-        
+        file_put_contents(__DIR__ . '/PDFs/Rechnugen/' . $order_id . '.pdf', $output);
     }
 }
