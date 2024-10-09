@@ -1,6 +1,15 @@
 <?php require_once 'templates/header.php'; ?>
 <?php require_once 'models/OrderModel.php'; ?>
 
+
+<?php
+//MIDDLEWARE. RETURN THE GUEST TO INDEX PHP
+if (Middleware::is_guest()) {
+    header('location: index.php');
+    exit();
+}
+?>
+
 <?php
 $orderModel = new OrderModel();
 
