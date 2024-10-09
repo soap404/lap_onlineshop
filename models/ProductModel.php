@@ -11,7 +11,8 @@ class ProductModel extends DB
 
     public function store($name, $description, $price, $stock, $active, $image)
     {
-        $ps = $this->conn->prepare('
+        $ps = $this->conn->prepare(
+            '
         INSERT INTO products (name, description, price, stock, is_active, img )
         VALUES (:name, :description, :price, :stock, :active, :image)'
         );
@@ -55,6 +56,15 @@ class ProductModel extends DB
         return $ps->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function show_active($id)
+    {
+        $ps = $this->conn->prepare('SELECT * FROM products WHERE id = :id AND is_active = 1 AND stock > 0');
+        $ps->bindParam(':id', $id, PDO::PARAM_INT);
+        $ps->execute();
+        return $ps->fetch(PDO::FETCH_ASSOC);
+    }
+
+
     public function update($id, $name, $description, $price, $stock, $active, $image)
     {
         $ps = $this->conn->prepare('UPDATE products
@@ -70,6 +80,18 @@ class ProductModel extends DB
         $ps->bindParam(':image', $image);
 
         $ps->execute();
+    }
 
+
+    public function update_stock($id, $stock)
+    {
+        $ps = $this->conn->prepare('UPDATE products
+        SET stock = :stock
+        WHERE id = :id');
+
+        $ps->bindParam(':id', $id);
+        $ps->bindParam(':stock', $stock);
+
+        $ps->execute();
     }
 }
