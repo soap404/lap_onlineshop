@@ -34,8 +34,8 @@ if (!$order) {
 }
 
 
-//Check if order belongs to user
-if ($order['user_id'] != $_SESSION['user']['id']) {
+//Check if order belongs to user or the user is admin
+if ($order['user_id'] != $_SESSION['user']['id'] && !Middleware::is_admin()) {
     header('location: index.php');
     exit();
 }

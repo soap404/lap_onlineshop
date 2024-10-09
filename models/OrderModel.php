@@ -9,6 +9,18 @@ class OrderModel extends DB
         $this->conn = $this->connect();
     }
 
+    public function index()
+    {
+        $ps = $this->conn->prepare('
+            SELECT o.id, s.name AS status, o.order_date, COUNT(op.id) AS count_products, SUM(op.price * op.quantity) AS total_price FROM orders o
+            LEFT JOIN status s ON s.id = o.status_id
+            LEFT JOIN order_products op ON op.order_id = o.id
+            GROUP BY o.id
+            ORDER BY o.order_date DESC
+        ');
+        $ps->execute();
+        return $ps->fetchAll();
+    }
 
     public function store($status_id, $invoice_address_id, $address_id, $user_id)
     {
@@ -26,6 +38,8 @@ class OrderModel extends DB
         return $this->conn->lastInsertId();
     }
 
+
+
     public function show($id)
     {
         $ps = $this->conn->prepare('SELECT * FROM orders WHERE id = :id');
@@ -33,6 +47,7 @@ class OrderModel extends DB
         $ps->execute();
         return $ps->fetch(PDO::FETCH_ASSOC);
     }
+
 
     public function store_order_products($order_id, $product_id, $quantity, $price)
     {
@@ -119,5 +134,17 @@ class OrderModel extends DB
         $ps->bindParam(':order_id', $order_id);
         $ps->execute();
         return $ps->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function update_status($order_id, $status_id)
+    {
+        $ps = $this->conn->prepare('
+        UPDATE orders
+        SET status_id = :status_id
+        WHERE id = :order_id
+        ');
+        $ps->bindParam(':order_id', $order_id);
+        $ps->bindParam(':status_id', $status_id);
+        $ps->execute();
     }
 }
