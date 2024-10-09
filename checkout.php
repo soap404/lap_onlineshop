@@ -109,7 +109,7 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
                         <blockquote class="blockquote mb-0">
                             <p><?php echo $address ['street']; ?> - <?php echo $address ['home_number']; ?>
                                 - <?php echo $address ['plz']; ?></p>
-                            <input type="radio" name="invoice_address"
+                            <input type="radio" name="invoice_address_id"
                                    id="<?php echo $address['id'].'-invoice_address' ?>"
                                    value="<?php echo $address['id'] ?>">
                         </blockquote>
@@ -129,7 +129,7 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
                         <blockquote class="blockquote mb-0">
                             <p><?php echo $address ['street']; ?> - <?php echo $address ['home_number']; ?>
                                 - <?php echo $address ['plz']; ?></p>
-                            <input type="radio" name="address" id="<?php echo $address['id'].'-address' ?>"
+                            <input type="radio" name="delivery_address_id" id="<?php echo $address['id'].'-address' ?>"
                                    value="<?php echo $address['id'] ?>">
                         </blockquote>
 
@@ -141,7 +141,7 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
 
         </div>
 
-        <button type="submit" class="btn btn-success" name="buy-now">Buy Now</button>
+        <button type="submit" class="btn btn-success" name="checkout">Buy Now</button>
     </form>
     <?php else:
         header('location: cart.php');
