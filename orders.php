@@ -42,8 +42,10 @@ $orders = $orderModel->get_orders_by_user($_SESSION['user']['id']);
                 <td><?php echo $order['total_price'] ?> €</td>
                 <td><?php echo $order['count_products'] ?></td>
                 <td>
-                    <a href="order-products.php?id=<?php echo $order['id'] ?>" class="btn btn-success">Show</a>
-                    <a href="" class="btn btn-danger">Downlod Invoice</a>
+                    <a href="order_products.php?id=<?php echo $order['id'] ?>" class="btn btn-success">Show</a>
+                    <?php if ($order['status'] == 'Done'): ?>
+                        <a href="" class="btn btn-danger">Downlod Invoice</a>
+                    <?php endif; ?>
                 </td>
             </tr>
         <?php endforeach; ?>
