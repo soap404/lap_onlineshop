@@ -26,6 +26,14 @@ class OrderModel extends DB
         return $this->conn->lastInsertId();
     }
 
+    public function show($id)
+    {
+        $ps = $this->conn->prepare('SELECT * FROM orders WHERE id = :id');
+        $ps->bindParam(':id', $id, PDO::PARAM_INT);
+        $ps->execute();
+        return $ps->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function store_order_products($order_id, $product_id, $quantity, $price)
     {
 
@@ -57,5 +65,59 @@ class OrderModel extends DB
         $ps->bindParam(':user_id', $user_id);
         $ps->execute();
         return $ps->fetchAll();
+    }
+
+
+    public function get_order_products($order_id)
+    {
+        $ps = $this->conn->prepare('
+        SELECT  p.name AS name , p.img AS image , op.quantity AS quantity, op.price AS price
+        FROM order_products op 
+        LEFT JOIN products p ON p.id = op.product_id
+        WHERE op.order_id = :order_id
+        ');
+
+        $ps->bindParam(':order_id', $order_id);
+        $ps->execute();
+        return $ps->fetchAll();
+    }
+
+    public function get_invoice_address($order_id)
+    {
+        $ps = $this->conn->prepare('
+        SELECT 
+            ia.id,
+            c.name AS country,
+            ia.street,
+            ia.plz,
+            ia.home_number
+        FROM invoice_addresses ia
+        LEFT JOIN countries c ON c.id = ia.country_id
+        LEFT JOIN orders o ON o.invoice_address_id = ia.id
+        WHERE o.id = :order_id
+
+        ');
+        $ps->bindParam(':order_id', $order_id);
+        $ps->execute();
+        return $ps->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function get_delivery_address($order_id)
+    {
+        $ps = $this->conn->prepare('
+        SELECT 
+            a.id,
+            c.name AS country,
+            a.street,
+            a.plz,
+            a.home_number
+        FROM addresses a
+        LEFT JOIN countries c ON c.id = a.country_id
+        LEFT JOIN orders o ON o.address_id = a.id
+        WHERE o.id = :order_id
+        ');
+        $ps->bindParam(':order_id', $order_id);
+        $ps->execute();
+        return $ps->fetch(PDO::FETCH_ASSOC);
     }
 }
