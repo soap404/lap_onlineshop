@@ -3,7 +3,7 @@
 class UserModel extends DB
 {
 
-    protected $conn;
+    protected PDO $conn;
 
     public function __construct()
     {
@@ -22,7 +22,7 @@ class UserModel extends DB
         return $ps->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function update_user($user_id, $fname, $lname, $email)
+    public function update_user($user_id, $fname, $lname, $email): void
     {
         $ps = $this->conn->prepare('
         UPDATE users SET
@@ -64,7 +64,7 @@ class UserModel extends DB
         return $ps->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function update_user_password_by_id($user_id, $password)
+    public function update_user_password_by_id($user_id, $password): void
     {
 
         $password = password_hash($password, PASSWORD_DEFAULT);
@@ -76,7 +76,7 @@ class UserModel extends DB
 
     }
 
-    public function get_all_countries()
+    public function get_all_countries(): false|array
     {
         $ps = $this->conn->prepare('SELECT * FROM countries');
         $ps->execute();
@@ -91,7 +91,7 @@ class UserModel extends DB
         return $ps->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function create_invoice_address($user_id, $country_id, $street, $plz, $home_number)
+    public function create_invoice_address($user_id, $country_id, $street, $plz, $home_number): false|string
     {
         $ps = $this->conn->prepare('
     INSERT INTO invoice_addresses
@@ -110,7 +110,7 @@ class UserModel extends DB
     }
 
 
-    public function create_address($user_id, $country_id, $street, $plz, $home_number)
+    public function create_address($user_id, $country_id, $street, $plz, $home_number): false|string
     {
         $ps = $this->conn->prepare('
     INSERT INTO addresses
@@ -128,7 +128,7 @@ class UserModel extends DB
         return $this->conn->lastInsertId();
     }
 
-    public function get_all_addresses_by_user_id($user_id)
+    public function get_all_addresses_by_user_id($user_id): false|array
     {
         $ps = $this->conn->prepare('
         SELECT
@@ -148,7 +148,7 @@ class UserModel extends DB
         return $ps->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function get_all_invoice_address_by_user_id($user_id)
+    public function get_all_invoice_address_by_user_id($user_id): false|array
     {
         $ps = $this->conn->prepare('
         SELECT

@@ -2,6 +2,8 @@
 require_once('../autoload.php');
 require_once('../models/ProductModel.php');
 require_once('../models/OrderModel.php');
+require_once('../mail/Mail.php');
+
 
 
 
@@ -52,7 +54,6 @@ if (isset($_POST['checkout'])) {
     $delivery_address_id = $_POST['delivery_address_id'];
 
     // CREATE PDF NAME WITH TIMESTAMP
-
     $invoice_pdf = time();
     //CALL THE ORDER MODEL
     $orderModel = new OrderModel();
@@ -74,6 +75,14 @@ if (isset($_POST['checkout'])) {
 
     //REMOVE THE CART FROM THE SESSION
     unset($_SESSION['cart']);
+
+    //SEND E-MAIL
+    $user = $_SESSION['user'];
+    $order = $orderModel->get_order_by_id($orderid);
+    $order_products = $orderModel->get_order_products($orderid);
+
+    $mailModel = new Mail();
+    $mailModel->pendingOrders($user, $order_products, $order);
 
     //REDIRECT TO THE ORDERS PAGE
     header('location: ' . DOMAIN . '/orders.php');
