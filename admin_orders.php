@@ -46,7 +46,7 @@ $orders = $orderModel->index();
                 <td>
                     <a href="order_products.php?id=<?php echo htmlspecialchars($order['id']) ?>" class="btn btn-success">Show</a>
                     <?php if ($order['status'] == 'Done'): ?>
-                        <a href="" class="btn btn-danger">Downlod Invoice</a>
+                        <a href="download_invoice.php?file=<?php echo $order['invoice_pdf'] ?>" class="btn btn-danger">Download Invoice</a>
                     <?php endif; ?>
                 </td>
                 <td>

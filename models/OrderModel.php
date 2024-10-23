@@ -12,7 +12,7 @@ class OrderModel extends DB
     public function index(): false|array
     {
         $ps = $this->conn->prepare('
-            SELECT o.id, s.name AS status, o.order_date, COUNT(op.id) AS count_products, SUM(op.price * op.quantity) AS total_price FROM orders o
+            SELECT o.id, s.name AS status, o.order_date, COUNT(op.id) AS count_products, SUM(op.price * op.quantity) AS total_price, o.invoice_pdf FROM orders o
             LEFT JOIN status s ON s.id = o.status_id
             LEFT JOIN order_products op ON op.order_id = o.id
             GROUP BY o.id, o.order_date
@@ -84,7 +84,7 @@ class OrderModel extends DB
     public function get_orders_by_user($user_id): false|array
     {
         $ps = $this->conn->prepare('
-        SELECT o.id, s.name AS status, o.order_date, COUNT(op.id) AS count_products, SUM(op.price * op.quantity) AS total_price FROM orders o
+        SELECT o.id, s.name AS status, o.order_date, COUNT(op.id) AS count_products, SUM(op.price * op.quantity) AS total_price, o.invoice_pdf FROM orders o
         LEFT JOIN status s ON s.id = o.status_id
         LEFT JOIN order_products op ON op.order_id = o.id
         WHERE user_id = :user_id

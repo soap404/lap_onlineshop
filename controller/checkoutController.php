@@ -53,7 +53,7 @@ if (isset($_POST['checkout'])) {
 
     // CREATE PDF NAME WITH TIMESTAMP
 
-    $invoice_pdf = time() . '.pdf';
+    $invoice_pdf = time();
     //CALL THE ORDER MODEL
     $orderModel = new OrderModel();
     //CALL THE STORE FUNCTION - 1 is FOR BANDING STATUS

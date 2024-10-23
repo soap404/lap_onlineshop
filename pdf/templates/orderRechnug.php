@@ -99,16 +99,16 @@
         <div class="invoice-body">
             <ul>
                 <li>
-                    <strong>Rechnungsnummer:</strong> <?php echo $order['id'] ?><br>
-                    <strong>Datum:</strong> <?php echo $order['order_date'] ?><br>
-                    <strong>Land:</strong> <?php echo $get_invoice_address['country'] ?><br>
-                    <strong>Postleitzahl:</strong> <?php echo $get_invoice_address['plz'] ?><br>
-                    <strong>Strasse:</strong> <?php echo $get_invoice_address['street'] ?><br>
-                    <strong>Haus Nummer:</strong> <?php echo $get_invoice_address['home_number'] ?>
+                    <strong>Rechnungsnummer:</strong> <?php echo htmlspecialchars($order['id']) ?><br>
+                    <strong>Datum:</strong> <?php echo htmlspecialchars($order['order_date']) ?><br>
+                    <strong>Land:</strong> <?php echo htmlspecialchars($get_invoice_address['country']) ?><br>
+                    <strong>Postleitzahl:</strong> <?php echo htmlspecialchars($get_invoice_address['plz']) ?><br>
+                    <strong>Strasse:</strong> <?php echo htmlspecialchars($get_invoice_address['street']) ?><br>
+                    <strong>Haus Nummer:</strong> <?php echo htmlspecialchars($get_invoice_address['home_number']) ?>
                 </li>
             </ul>
 
-            <h2>Rechnung für <?php echo $user['fname'] . ' ' . $user['lname'] ?></h2>
+            <h2>Rechnung für <?php echo htmlspecialchars($user['fname']) . ' ' . htmlspecialchars($user['lname']) ?></h2>
             <p>Vielen Dank für Ihren Einkauf! Hier sind die Details Ihrer Bestellung:</p>
 
             <table class="invoice-details">
@@ -120,8 +120,8 @@
                 </tr>
                 <?php foreach ($order_products as $order_product): ?>
                     <tr>
-                        <td><?php echo $order_product['name'] ?></td>
-                        <td><?php echo $order_product['quantity'] ?></td>
+                        <td><?php echo htmlspecialchars($order_product['name']) ?></td>
+                        <td><?php echo htmlspecialchars( $order_product['quantity']) ?></td>
                         <td>€<?php echo number_format($order_product['price'], 2, ',', '.') ?></td>
                         <td>€<?php echo number_format($order_product['quantity'] * $order_product['price'], 2, ',', '.') ?></td>
                     </tr>

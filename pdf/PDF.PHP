@@ -46,6 +46,6 @@ class PDF
         $this->dompdf->render();
 
         $output = $this->dompdf->output();
-        file_put_contents(__DIR__ . '/PDFs/Rechnugen/' . $order['invoice_pdf'], $output);
+        file_put_contents(__DIR__.'/PDFs/Rechnungen/'. $order['invoice_pdf'] . '.pdf', $output);
     }
 }
