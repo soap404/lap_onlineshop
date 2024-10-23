@@ -58,7 +58,10 @@ if (isset($_POST['register'])) {
     } else {
 
 
-        $authModel->register($fname, $lname, $email, $password);
+        $user_id = $authModel->register($fname, $lname, $email, $password);
+        $token = $authModel->create_token($user_id);
+
+        //send the token to the user email
 
         header('Location:'.DOMAIN.'/login.php');
     }
