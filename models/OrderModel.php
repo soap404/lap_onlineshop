@@ -52,7 +52,7 @@ class OrderModel extends DB
     public function get_order_by_id($id)
     {
         $ps = $this->conn->prepare('
-        SELECT o.id, o.order_date, SUM(op.price * op.quantity) AS total_price, o.invoice_pdf FROM orders o
+        SELECT o.id,o.user_id, o.order_date, SUM(op.price * op.quantity) AS total_price, o.invoice_pdf FROM orders o
         LEFT JOIN order_products op ON op.order_id = o.id
         WHERE o.id = :order_id
         GROUP BY o.id

@@ -61,11 +61,11 @@
 
 <div class="email-container">
     <div class="email-header">
-        <h1>Ihre Bestellung ist in Bearbeitung!</h1>
+        <h1>Vielen Dank für Ihre Bestellung!</h1>
     </div>
     <div class="email-body">
         <h2>Hallo <?php echo htmlspecialchars($mail_user['fname']) . ' ' . htmlspecialchars($mail_user['lname']) ?>,</h2>
-        <p>Wir haben Ihre Bestellung erhalten, und sie befindet sich derzeit im Status "ausstehend". Hier sind die Details Ihrer Bestellung:</p>
+        <p>Wir haben Ihre Bestellung erhalten und ist unterweges. Hier sind die Details Ihrer Bestellung:</p>
 
         <table class="order-details">
             <tr>
@@ -75,7 +75,7 @@
             </tr>
             <?php foreach ($mail_order_products as $order_product): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars( $order_product ['name'])?></td>
+                    <td><?php echo  htmlspecialchars($order_product ['name'])?></td>
                     <td><?php echo  htmlspecialchars($order_product ['quantity'])?></td>
                     <td>€<?php echo  htmlspecialchars($order_product ['price'])?> €</td>
                 </tr>
@@ -87,7 +87,6 @@
             <p><strong>Datum:</strong> <?php echo htmlspecialchars($mail_order['order_date'])?></p>
         </div>
 
-        <p>Sobald Ihre Bestellung versandt wird, erhalten Sie eine Benachrichtigung.</p>
         <p>Falls Sie Fragen haben, kontaktieren Sie unseren Kundenservice.</p>
     </div>
     <div class="email-footer">
