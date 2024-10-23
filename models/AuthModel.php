@@ -2,7 +2,6 @@
 
 use Random\RandomException;
 
-require_once('../autoload.php');
 
 class AuthModel extends DB
 {
@@ -66,6 +65,42 @@ class AuthModel extends DB
         $ps->execute();
 
         return $token;
+    }
+
+    public function user_id_by_token($token): int|bool
+    {
+
+        $ps = $this->conn->prepare('SELECT * FROM active_tokens WHERE token = :token');
+        $ps->bindParam(':token', $token);
+        $ps->execute();
+        $user = $ps->fetch(PDO::FETCH_ASSOC);
+        if ($user) {
+            return $user['user_id'];
+        } else {
+            return false;
+        }
+    }
+
+    public function activate($user_id): void
+    {
+
+        $ps = $this->conn->prepare('
+        UPDATE users
+        set is_active = 1
+        where id = :id
+        ');
+        $ps->bindParam(':id', $user_id);
+        $ps->execute();
+    }
+
+    public function remove_token($user_id): void
+    {
+        $ps = $this->conn->prepare('
+        DELETE FROM active_tokens
+        WHERE user_id = :user_id
+        ');
+        $ps->bindParam(':user_id', $user_id);
+        $ps->execute();
     }
 
 }

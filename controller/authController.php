@@ -62,6 +62,7 @@ if (isset($_POST['register'])) {
         $token = $authModel->create_token($user_id);
 
         //send the token to the user email
+        Messages::setMessage('Please check your email to activate your account');
 
         header('Location:'.DOMAIN.'/login.php');
     }
