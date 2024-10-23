@@ -18,7 +18,7 @@ class Validation
         return $errors;
     }
 
-    public static function is_errors()
+    public static function is_errors(): bool
     {
         if (isset($_SESSION['errors'])) {
             if (count($_SESSION['errors']) > 0) {
@@ -29,12 +29,12 @@ class Validation
         return false;
     }
 
-    public static function setValues($values)
+    public static function setValues(array $values)
     {
         $_SESSION['values'] = $values;
     }
 
-    public static function getValue($key)
+    public static function getValue(string $key)
     {
         if (isset($_SESSION['values'][$key])) {
             $value = $_SESSION['values'][$key];

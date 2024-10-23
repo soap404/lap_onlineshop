@@ -10,7 +10,6 @@ class AuthModel extends DB
     {
         $this->conn = $this->connect();
     }
-
     public function register($fname, $lname, $email, $password)
     {
         $password = password_hash($password, PASSWORD_DEFAULT);

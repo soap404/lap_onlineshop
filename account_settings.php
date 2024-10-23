@@ -49,19 +49,19 @@ $addresses = $userModel->get_all_addresses_by_user_id($_SESSION['user']['id']);
                 <div class="mb-3">
                     <label for="fname" class="form-label">First name</label>
                     <input type="text" class="form-control" id="fname" name="fname"
-                           value="<?php echo $user['fname'] ?>">
+                           value="<?php echo htmlspecialchars($user['fname']) ?>">
                 </div>
 
                 <div class="mb-3">
                     <label for="lname" class="form-label">Last name</label>
                     <input type="text" class="form-control" id="lname" name="lname"
-                           value="<?php echo $user['lname'] ?>">
+                           value="<?php echo htmlspecialchars($user['lname']) ?>">
                 </div>
 
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
                     <input type="text" class="form-control" id="email" name="email"
-                           value="<?php echo $user['email'] ?>">
+                           value="<?php echo htmlspecialchars($user['email']) ?>">
                 </div>
 
 
@@ -102,12 +102,13 @@ $addresses = $userModel->get_all_addresses_by_user_id($_SESSION['user']['id']);
 
                 <div class="card mt-4 mb-4">
                     <div class="card-header">
-                        <?php echo $address ['country']; ?>
+                        <?php echo htmlspecialchars($address ['country']); ?>
                     </div>
                     <div class="card-body">
                         <blockquote class="blockquote mb-0">
-                            <p><?php echo $address ['street']; ?> - <?php echo $address ['home_number']; ?>
-                                - <?php echo $address ['plz']; ?></p>
+                            <p><?php echo htmlspecialchars($address ['street']); ?>
+                                - <?php echo htmlspecialchars($address ['home_number']); ?>
+                                - <?php echo htmlspecialchars($address ['plz']); ?></p>
                         </blockquote>
                     </div>
                 </div>
@@ -122,12 +123,12 @@ $addresses = $userModel->get_all_addresses_by_user_id($_SESSION['user']['id']);
 
                 <div class="card mt-4 mb-4">
                     <div class="card-header">
-                        <?php echo $address ['country']; ?>
+                        <?php echo htmlspecialchars($address ['country']); ?>
                     </div>
                     <div class="card-body">
                         <blockquote class="blockquote mb-0">
-                            <p><?php echo $address ['street']; ?> - <?php echo $address ['home_number']; ?>
-                                - <?php echo $address ['plz']; ?></p>
+                            <p><?php echo htmlspecialchars($address ['street']); ?> - <?php echo htmlspecialchars($address ['home_number']); ?>
+                                - <?php echo htmlspecialchars($address ['plz']); ?></p>
                         </blockquote>
                     </div>
                 </div>

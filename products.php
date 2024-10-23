@@ -35,20 +35,20 @@ $products = $productModel->index();
         <tbody>
         <?php foreach ($products as $product): ?>
             <tr>
-            <th scope="row"><?php echo $product['id'] ?></th>
+            <th scope="row"><?php echo htmlspecialchars($product['id']) ?></th>
             <td><img width="100px" height="100px"
                      src="images/<?php echo $product['img'] ? : 'default.png' ?>"
                      alt=""></td>
-            <td><?php echo $product['name'] ?></td>
-            <td><?php echo $product['description'] ?></td>
-            <td><?php echo $product['price'] ?> €</td>
+            <td><?php echo htmlspecialchars($product['name']) ?></td>
+            <td><?php echo htmlspecialchars($product['description']) ?></td>
+            <td><?php echo htmlspecialchars($product['price']) ?> €</td>
 
-            <td><?php echo $product['stock'] ?></td>
+            <td><?php echo htmlspecialchars($product['stock']) ?></td>
             <td>
-                <a class="btn btn-warning" href="edit_product.php?id=<?php echo $product['id'] ?>">Edit</a>
+                <a class="btn btn-warning" href="edit_product.php?id=<?php echo htmlspecialchars($product['id']) ?>">Edit</a>
 
                 <form action="controller/productController.php" method="POST">
-                    <input type="hidden" value="<?php echo $product['id'] ?>" name="id">
+                    <input type="hidden" value="<?php echo htmlspecialchars($product['id']) ?>" name="id">
                     <button class="btn btn-danger" name="delete_product">Delete</button>
                 </form>
             </td>

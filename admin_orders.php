@@ -38,13 +38,13 @@ $orders = $orderModel->index();
     <tbody>
         <?php foreach ($orders as $order): ?>
             <tr>
-                <th scope="row"><?php echo $order['id'] ?></th>
-                <td><?php echo $order['order_date'] ?></td>
-                <td><?php echo $order['status'] ?></td>
-                <td><?php echo $order['total_price'] ?> €</td>
-                <td><?php echo $order['count_products'] ?></td>
+                <th scope="row"><?php echo htmlspecialchars($order['id']) ?></th>
+                <td><?php echo htmlspecialchars($order['order_date']) ?></td>
+                <td><?php echo htmlspecialchars($order['status']) ?></td>
+                <td><?php echo htmlspecialchars($order['total_price']) ?> €</td>
+                <td><?php echo htmlspecialchars($order['count_products']) ?></td>
                 <td>
-                    <a href="order_products.php?id=<?php echo $order['id'] ?>" class="btn btn-success">Show</a>
+                    <a href="order_products.php?id=<?php echo htmlspecialchars($order['id']) ?>" class="btn btn-success">Show</a>
                     <?php if ($order['status'] == 'Done'): ?>
                         <a href="" class="btn btn-danger">Downlod Invoice</a>
                     <?php endif; ?>
@@ -54,7 +54,7 @@ $orders = $orderModel->index();
                         <form action="controller/orderController.php" method="POST">
                             <button name="order_done" class="btn btn-warning">Mark as Done</button>
                             <button name="order_cancel" class="btn btn-danger">Cancel</button>
-                            <input type="hidden" value="<?php echo $order['id'] ?>" name="order_id">
+                            <input type="hidden" value="<?php echo htmlspecialchars($order['id']) ?>" name="order_id">
                         </form>
                     <?php else: ?>
                         You can not Edit this Order anymore

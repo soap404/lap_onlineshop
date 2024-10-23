@@ -11,27 +11,26 @@ $products = $productModel->index_user();
         }
     </style>
 
-
     <div class="container mt-4">
         <div class="row">
             <?php foreach ($products as $product) : ?>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                     <div class="card h-100">
                         <div class="ratio ratio-16x9">
-                            <img src="images/<?php echo $product['img'] ? : 'default.png' ?>" class="card-img-top" alt="...">
+                            <img src="images/<?php echo htmlspecialchars($product['img'] ?: 'default.png'); ?>" class="card-img-top" alt="...">
                         </div>
                         <div class="card-body d-flex flex-column">
-                            <h5 class="card-title"><?php echo $product['name'] ?></h5>
-                            <p class="card-text flex-grow-1"><?php echo $product['description'] ?></p>
+                            <h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5>
+                            <p class="card-text flex-grow-1"><?php echo htmlspecialchars($product['description']); ?></p>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Stock: <?php echo $product['stock'] ?></li>
-                                <li class="list-group-item">Price: <?php echo $product['price'] ?> €</li>
+                                <li class="list-group-item">Stock: <?php echo htmlspecialchars($product['stock']); ?></li>
+                                <li class="list-group-item">Price: <?php echo htmlspecialchars($product['price']); ?> €</li>
                             </ul>
                             <form action="controller/cartController.php" method="POST">
-                                <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
+                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($product['id']); ?>">
                                 <select class="form-select form-select-sm" aria-label="Small select example" name="qty">
                                     <?php for ($i = 1; $i <= $product['stock'] && $i <= 30; $i++) : ?>
-                                        <option value="<?php echo $i ?>">Stock: <?php echo $i ?></option>
+                                        <option value="<?php echo htmlspecialchars($i); ?>">Stock: <?php echo htmlspecialchars($i); ?></option>
                                     <?php endfor; ?>
                                 </select>
                                 <br>

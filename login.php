@@ -19,6 +19,17 @@ if (Middleware::is_user()) {
 } ?>
 
 
+<?php
+// show the checkout login message
+if (Messages::is_message()) {
+    $message = Messages::getMessage();
+    echo '<div class="alert alert-info">'.$message.'</div>';
+}
+
+
+?>
+
+
     <form action="controller/authController.php" method="POST">
 
         <div class="mb-3">
