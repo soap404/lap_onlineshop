@@ -20,7 +20,7 @@ if (Middleware::is_user()) {
 
 
 <?php
-// show the checkout login message
+// show the checkout login message or active account message
 if (Messages::is_message()) {
     $message = Messages::getMessage();
     echo '<div class="alert alert-info">'.$message.'</div>';

@@ -104,8 +104,16 @@ if (isset($_POST['login'])) {
         $user = $authModel->get_user_by_email($email);
         if ($user) {
             if (password_verify($password, $user['password'])) {
-                unset($user['password']);
-                $_SESSION['user'] = $user;
+                if($user['is_active'] == 1){
+                    unset($user['password']);
+                    $_SESSION['user'] = $user;
+                }else{
+                    $message = 'Your account is inactive. Please click the link you revised by email';
+                    Messages::setMessage($message);
+                    header('Location:'.DOMAIN.'/login.php');
+                    exit();
+                }
+
             } else {
                 $errors[] = 'Wrong password';
             }

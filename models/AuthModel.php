@@ -18,7 +18,7 @@ class AuthModel extends DB
         INSERT INTO users
             (fname,lname,email,password,is_admin, is_active)
         VALUES 
-            (:fname,:lname,:email,:password,0, 1)
+            (:fname,:lname,:email,:password,0, 0)
 ');
 
         $ps->bindParam(':fname', $fname);
