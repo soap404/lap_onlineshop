@@ -50,7 +50,7 @@ class AuthModel extends DB
      */
     public function create_token($user_id): string
     {
-        $token = bin2hex(random_bytes(500));
+        $token = bin2hex(random_bytes(60));
 
         $ps = $this->conn->prepare('
             INSERT INTO active_tokens

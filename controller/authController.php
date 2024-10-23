@@ -1,6 +1,8 @@
 <?php
 require_once('../autoload.php');
 require_once('../models/authModel.php');
+require_once('../mail/Mail.php');
+
 
 if (isset($_POST['register'])) {
     //MIDDLEWARE. RETURN THE USER TO INDEX PHP
@@ -60,6 +62,10 @@ if (isset($_POST['register'])) {
 
         $user_id = $authModel->register($fname, $lname, $email, $password);
         $token = $authModel->create_token($user_id);
+
+        //send the user the email
+        $MailModel = new Mail();
+        $MailModel->sendToken($email, $token);
 
         //send the token to the user email
         Messages::setMessage('Please check your email to activate your account');
