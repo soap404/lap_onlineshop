@@ -51,11 +51,13 @@ if (isset($_POST['checkout'])) {
     $invoice_address_id = $_POST['invoice_address_id'];
     $delivery_address_id = $_POST['delivery_address_id'];
 
+    // CREATE PDF NAME WITH TIMESTAMP
 
+    $invoice_pdf = time() . '.pdf';
     //CALL THE ORDER MODEL
     $orderModel = new OrderModel();
-    //CALL THE STORE FUNCTION - 1 is FOR PANDING STATUS
-    $orderid = $orderModel->store('1', $invoice_address_id, $delivery_address_id, $user_id);
+    //CALL THE STORE FUNCTION - 1 is FOR BANDING STATUS
+    $orderid = $orderModel->store('1', $invoice_address_id, $delivery_address_id, $user_id, $invoice_pdf);
 
 
     //SAVE PRODUCTS IN THE order_products TABLE

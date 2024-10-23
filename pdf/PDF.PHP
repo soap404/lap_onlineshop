@@ -9,7 +9,7 @@ use Dompdf\Dompdf;
 class PDF
 {
 
-    private $dompdf;
+    private Dompdf $dompdf;
 
     public function __construct()
     {
@@ -18,7 +18,7 @@ class PDF
 
 
 
-    public function order($order_id)
+    public function order($order_id): void
     {
 
         $userModel = new UserModel();
@@ -46,6 +46,6 @@ class PDF
         $this->dompdf->render();
 
         $output = $this->dompdf->output();
-        file_put_contents(__DIR__ . '/PDFs/Rechnugen/' . $order_id . '.pdf', $output);
+        file_put_contents(__DIR__ . '/PDFs/Rechnugen/' . $order['invoice_pdf'], $output);
     }
 }

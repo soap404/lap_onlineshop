@@ -2,38 +2,39 @@
 
 class OrderModel extends DB
 {
-    protected $conn;
+    protected PDO $conn;
 
     public function __construct()
     {
         $this->conn = $this->connect();
     }
 
-    public function index()
+    public function index(): false|array
     {
         $ps = $this->conn->prepare('
             SELECT o.id, s.name AS status, o.order_date, COUNT(op.id) AS count_products, SUM(op.price * op.quantity) AS total_price FROM orders o
             LEFT JOIN status s ON s.id = o.status_id
             LEFT JOIN order_products op ON op.order_id = o.id
-            GROUP BY o.id
+            GROUP BY o.id, o.order_date
             ORDER BY o.order_date DESC
         ');
         $ps->execute();
         return $ps->fetchAll();
     }
 
-    public function store($status_id, $invoice_address_id, $address_id, $user_id)
+    public function store($status_id, $invoice_address_id, $address_id, $user_id, $invoice_pdf): false|string
     {
         $ps = $this->conn->prepare(
             '
-        INSERT INTO orders (status_id, invoice_address_id, address_id, user_id)
-        VALUES (:status_id, :invoice_address_id, :address_id, :user_id)'
+        INSERT INTO orders (status_id, invoice_address_id, address_id, user_id, invoice_pdf)
+        VALUES (:status_id, :invoice_address_id, :address_id, :user_id, :invoice_pdf)'
         );
 
         $ps->bindParam(':status_id', $status_id);
         $ps->bindParam(':invoice_address_id', $invoice_address_id);
         $ps->bindParam(':address_id', $address_id);
         $ps->bindParam(':user_id', $user_id);
+        $ps->bindParam(':invoice_pdf', $invoice_pdf);
         $ps->execute();
         return $this->conn->lastInsertId();
     }
@@ -51,7 +52,7 @@ class OrderModel extends DB
     public function get_order_by_id($id)
     {
         $ps = $this->conn->prepare('
-        SELECT o.id, o.order_date, SUM(op.price * op.quantity) AS total_price FROM orders o
+        SELECT o.id, o.order_date, SUM(op.price * op.quantity) AS total_price, o.invoice_pdf FROM orders o
         LEFT JOIN order_products op ON op.order_id = o.id
         WHERE o.id = :order_id
         GROUP BY o.id
@@ -62,7 +63,7 @@ class OrderModel extends DB
     }
 
 
-    public function store_order_products($order_id, $product_id, $quantity, $price)
+    public function store_order_products($order_id, $product_id, $quantity, $price): void
     {
 
         $ps = $this->conn->prepare(
@@ -80,14 +81,14 @@ class OrderModel extends DB
 
 
 
-    public function get_orders_by_user($user_id)
+    public function get_orders_by_user($user_id): false|array
     {
         $ps = $this->conn->prepare('
         SELECT o.id, s.name AS status, o.order_date, COUNT(op.id) AS count_products, SUM(op.price * op.quantity) AS total_price FROM orders o
         LEFT JOIN status s ON s.id = o.status_id
         LEFT JOIN order_products op ON op.order_id = o.id
         WHERE user_id = :user_id
-        GROUP BY o.id
+        GROUP BY o.id, o.order_date
         ORDER BY o.order_date DESC
         ');
         $ps->bindParam(':user_id', $user_id);
@@ -96,7 +97,7 @@ class OrderModel extends DB
     }
 
 
-    public function get_order_products($order_id)
+    public function get_order_products($order_id): false|array
     {
         $ps = $this->conn->prepare('
         SELECT  p.name AS name , p.img AS image , op.quantity AS quantity, op.price AS price
@@ -149,7 +150,7 @@ class OrderModel extends DB
         return $ps->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function update_status($order_id, $status_id)
+    public function update_status($order_id, $status_id): void
     {
         $ps = $this->conn->prepare('
         UPDATE orders
