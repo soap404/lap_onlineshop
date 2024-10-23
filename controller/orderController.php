@@ -53,11 +53,24 @@ if (isset($_POST['order_cancel'])) {
         header('location: ' . DOMAIN . '/index.php');
         exit;
     }
+    $order_id = $_POST['order_id'];
 
     $orderModel = new OrderModel();
 
     //Update status (change the status id to your cancel id)
-    $orderModel->update_status($_POST['order_id'], 3);
+    $orderModel->update_status($order_id , 3);
+
+    //SEND EMAIL
+    $order = $orderModel->get_order_by_id($order_id);
+
+    $userid = $order['user_id'];
+    $userModel = new UserModel();
+
+    $user = $userModel->get_user_by_id($userid);
+    $order_products = $orderModel->get_order_products($order_id);
+
+    $mailModel = new Mail();
+    $mailModel->cancelOrder($user, $order_products, $order);
 
     header('location: ' . DOMAIN . '/admin_orders.php');
     exit;

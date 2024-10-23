@@ -79,6 +79,33 @@ class Mail
         $this->mail->send();
     }
 
+    public function cancelOrder($user, $order_products, $order): void
+    {
+        $orderId = $order['id'];
+        $subject = "Ihre Bestellung ist stoniert | #$orderId ";
+
+        $email = $user['email'];
+
+        $this->mail->Subject = $subject;
+        $this->mail->addAddress($email);
+
+        $mail_user = $user;
+        $mail_order_products = $order_products;
+        $mail_order = $order;
+
+        ob_start();
+
+        require "Templates/orderCancelEmailTemplate.php";
+
+        $mail_body = ob_get_clean();
+
+        $this->mail->Body = $mail_body;
+
+
+        $this->mail->send();
+
+    }
+
     public function sendToken($email, $token): void
     {
 
