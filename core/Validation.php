@@ -3,7 +3,7 @@
 class Validation
 {
 
-    public static function setErrors(array $errors)
+    public static function setErrors(array $errors): void
     {
         $_SESSION['errors'] = $errors;
 
@@ -29,7 +29,7 @@ class Validation
         return false;
     }
 
-    public static function setValues(array $values)
+    public static function setValues(array $values): void
     {
         $_SESSION['values'] = $values;
     }

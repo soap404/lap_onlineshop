@@ -2,14 +2,14 @@
 
 class ProductModel extends DB
 {
-    protected $conn;
+    protected PDO $conn;
 
     public function __construct()
     {
         $this->conn = $this->connect();
     }
 
-    public function store($name, $description, $price, $stock, $active, $image)
+    public function store($name, $description, $price, $stock, $active, $image): false|string
     {
         $ps = $this->conn->prepare(
             '
@@ -27,21 +27,21 @@ class ProductModel extends DB
         return $this->conn->lastInsertId();
     }
 
-    public function index()
+    public function index(): false|array
     {
         $ps = $this->conn->prepare('SELECT * FROM products');
         $ps->execute();
         return $ps->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function index_user()
+    public function index_user(): false|array
     {
         $ps = $this->conn->prepare('SELECT * FROM products WHERE is_active = 1 and stock > 0');
         $ps->execute();
         return $ps->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function delete($id)
+    public function delete($id): void
     {
         $ps = $this->conn->prepare('DELETE FROM products WHERE id = :id');
         $ps->bindParam(':id', $id, PDO::PARAM_INT);
@@ -65,7 +65,7 @@ class ProductModel extends DB
     }
 
 
-    public function update($id, $name, $description, $price, $stock, $active, $image)
+    public function update($id, $name, $description, $price, $stock, $active, $image): void
     {
         $ps = $this->conn->prepare('UPDATE products
         SET name = :name, description = :description, price = :price, stock = :stock, is_active = :active, img = :image
@@ -83,7 +83,7 @@ class ProductModel extends DB
     }
 
 
-    public function update_stock($id, $stock)
+    public function update_stock($id, $stock): void
     {
         $ps = $this->conn->prepare('UPDATE products
         SET stock = :stock

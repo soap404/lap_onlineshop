@@ -83,7 +83,7 @@ $delivery_address = $orderModel->get_delivery_address($order_id);
         <tbody>
         <?php foreach ($orderProducts as $product): ?>
             <tr>
-                <td><img width="100px" height="100px" src="./images/<?php echo htmlspecialchars($product['image'] ?: 'default.png'); ?>"></td>
+                <td><img width="100px" height="100px" src="./images/<?php echo htmlspecialchars($product['image'] ?: 'default.png'); ?>" alt=""></td>
                 <td><?php echo htmlspecialchars($product['name']); ?></td>
                 <td><?php echo htmlspecialchars($product['price']); ?> €</td>
                 <td><?php echo htmlspecialchars($product['quantity']); ?></td>

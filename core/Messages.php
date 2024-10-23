@@ -12,7 +12,7 @@ class Messages
 
     }
 
-    public static function setMessage(string $message)
+    public static function setMessage(string $message): void
     {
         $_SESSION['message'] = $message;
 
