@@ -1,7 +1,7 @@
 <?php require_once 'templates/header.php'; ?>
 
 <?php
-//MIDDLEWARE. RETURN THE NOT GUEST TO INDEX PHP
+//MIDDLEWARE. RETURN THE GUEST TO INDEX PHP
 if (Middleware::is_guest()) {
     header('location: index.php');
     exit();
